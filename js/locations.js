@@ -189,7 +189,9 @@
 
     var encounters = {
         agahnim: {
-            caption: 'Agahnim {sword2}/ ({cape}{sword1}){lantern}',
+           caption: is_swordless ?
+		'Agahnim {hammer}/ ({cape}{net}){lantern}':
+		'Agahnim {sword2}/ ({cape}{sword1}){lantern}',
             is_completable: function(items) {
                 return (items.sword >= 2 || is_swordless && items.hammer) || items.cape && (items.sword || is_swordless && items.net) ?
                     items.lantern ? 'available' : 'dark' :
