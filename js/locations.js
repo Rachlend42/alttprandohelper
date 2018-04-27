@@ -1,6 +1,9 @@
 (function(window) {
     'use strict';
-
+	
+	var query = uri_query(),
+		is_swordless = query.swords === 'no';
+		
     function always() { return 'available'; }
 
     var dungeons = {
@@ -90,7 +93,7 @@
             darkworld: true,
             chest_limit: 2,
             is_completable: function(items) {
-                return !items.can_reach_outcast() || !items.firerod || !items.sword ? 'unavailable' : 'available';
+                return !items.can_reach_outcast() || !items.firerod || !items.sword && !is_swordless ? 'unavailable' : 'available';
             },
             is_progressable: function(items) {
                 if (!items.can_reach_outcast()) return 'unavailable';
@@ -117,12 +120,12 @@
             chest_limit: 3,
             is_completable: function(items) {
                 if (!items.moonpearl || !items.flippers || items.glove !== 2 || !items.hammer) return 'unavailable';
-                if (!items.firerod && !(items.bombos && items.sword)) return 'unavailable';
+                if (!items.firerod && !(items.bombos && (items.sword || is_swordless))) return 'unavailable';
                 return items.hookshot || items.somaria ? 'available' : 'possible';
             },
             is_progressable: function(items) {
                 if (!items.moonpearl || !items.flippers || items.glove !== 2) return 'unavailable';
-                if (!items.firerod && !(items.bombos && items.sword)) return 'unavailable';
+                if (!items.firerod && !(items.bombos && (items.sword || is_swordless))) return 'unavailable';
                 return items.hammer ? 'available' : 'possible';
             }
         },
@@ -188,7 +191,7 @@
         agahnim: {
             caption: 'Agahnim {sword2}/ ({cape}{sword1}){lantern}',
             is_completable: function(items) {
-                return items.sword >= 2 || items.cape && items.sword ?
+                return (items.sword >= 2 || is_swordless && items.hammer) || items.cape && (items.sword || is_swordless && items.net) ?
                     items.lantern ? 'available' : 'dark' :
                     'unavailable';
             }
@@ -249,10 +252,12 @@
             }
         },
         ether: {
-            caption: 'Ether Tablet {sword2}{book}',
+            caption: is_swordless ?
+				'Ether Tablet {hammer}{book}':
+				'Ether Tablet {sword2}{book}',
             is_available: function(items) {
                 return items.book && (items.glove || items.flute) && (items.mirror || items.hookshot && items.hammer) ?
-                    items.sword >= 2 ?
+                    items.sword >= 2 || items.hammer && is_swordless ?
                         items.lantern || items.flute ? 'available' : 'dark' :
                         'possible' :
                     'unavailable';
@@ -426,10 +431,12 @@
             is_available: always
         },
         bombos: {
-            caption: 'Bombos Tablet {mirror}{sword2}{book}',
+            caption: is_swordless ?
+				'Bombos Tablet {mirror}{hammer}{book}':
+				'Bombos Tablet {mirror}{sword2}{book}',
             is_available: function(items) {
                 return items.book && items.mirror && (items.can_reach_outcast() || items.agahnim && items.moonpearl && items.hammer) ?
-                    items.sword >= 2 ? 'available' : 'possible' :
+                    items.sword >= 2 || items.hammer && is_swordless ? 'available' : 'possible' :
                     'unavailable';
             }
         },

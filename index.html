@@ -17,22 +17,30 @@
 
   <div>
     <label>Standard</label>
-    <button type="button" class="launch" data-mode="standard" data-map="no">Tracker only</button>
-    <button type="button" class="launch" data-mode="standard" data-map="hmap">Horizontal map</button>
-    <button type="button" class="launch" data-mode="standard" data-map="vmap">Vertical map</button>
+    <button type="button" class="launch" data-mode="standard" data-sword="uncle">Uncle Has Sword</button>
+	<button type="button" class="launch" data-mode="standard" data-sword="yes">Swords Random</button>
+	<button type="button" class="launch" data-mode="standard" data-sword="no">Swordless</button>
   </div>
 
   <div>
     <label>Open</label>
-    <button type="button" class="launch" data-mode="open" data-map="no">Tracker only</button>
-    <button type="button" class="launch" data-mode="open" data-map="hmap">Horizontal map</button>
-    <button type="button" class="launch" data-mode="open" data-map="vmap">Vertical map</button>
+    <button type="button" class="launch" data-mode="open" data-sword="yes">Sword</button>
+	<button type="button" class="launch" data-mode="open" data-sword="no">Swordless</button> 
   </div>
 
   <div>
+    <label>Map?</label>
+    <select id="map">
+      <option value="no">Nah</option>
+      <option value="hmap" selected>Horizontal</option>
+      <option value="vmap">Vertical</option>
+    </select>
+  </div>
+  
+  <div>
     <label>Sprite</label>
     <select id="sprite">
-      <option value="" selected>Default</option>
+      <option value="">Default</option>
       <option value="four-swords-link">Four Swords Link</option>
       <option value="boo">Boo</option>
       <option value="boy">Boy</option>
@@ -62,7 +70,7 @@
       <option value="maiden">Maiden</option>
       <option value="maple-queen">Maple Queen</option>
       <option value="mario">Mario</option>
-      <option value="marisa">Marisa</option>
+      <option value="marisa" selected>Marisa</option>
       <option value="minish-cap-link">Minish Cap Link</option>
       <option value="modern-link">Modern Link</option>
       <option value="mog">Mog</option>

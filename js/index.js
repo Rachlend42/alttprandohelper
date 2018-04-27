@@ -13,8 +13,9 @@
     function launch_tracker() {
         var params = {
                 mode: this.getAttribute('data-mode'),
-                hmap: this.getAttribute('data-map') === 'hmap',
-                vmap: this.getAttribute('data-map') === 'vmap',
+				swords: this.getAttribute('data-sword'),
+                hmap: document.getElementById('map').value === 'hmap',
+                vmap: document.getElementById('map').value === 'vmap',
                 sprite: document.getElementById('sprite').value,
                 scale: document.getElementById('scale').value,
                 bg: document.getElementById('background-color').value ||
@@ -40,12 +41,13 @@
             'width={width},height={height},titlebar=0,menubar=0,toolbar=0,scrollbars=0,resizable=0'
                 .replace('{width}', size.w)
                 .replace('{height}', size.h));
-        setTimeout('window.close()', 5000);
+        //setTimeout('window.close()', 5000);
     }
 
     function query(params) {
         return compact([
             'mode='+params.mode,
+			'swords='+params.swords,
             params.hmap && 'hmap',
             params.vmap && 'vmap',
             params.sprite && 'sprite='+params.sprite,

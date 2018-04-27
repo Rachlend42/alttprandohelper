@@ -1,6 +1,9 @@
 (function(window) {
     'use strict';
-
+	var query = uri_query(),
+		is_swordless = query.swords === 'no';
+	var query = uri_query(),
+		is_uncle = query.swords === 'uncle';	
     var items = {
         has_melee: function() { return this.sword || this.hammer; },
         has_bow: function() { return this.bow > 1; },
@@ -15,7 +18,7 @@
         },
 
         medallion_check: function(medallion) {
-            if (!this.sword || !this.bombos && !this.ether && !this.quake) return 'unavailable';
+            if (!this.sword && !is_swordless || !this.bombos && !this.ether && !this.quake) return 'unavailable';
             if (medallion === 1 && !this.bombos ||
                 medallion === 2 && !this.ether ||
                 medallion === 3 && !this.quake) return 'unavailable';
@@ -24,7 +27,7 @@
 
         inc: counters(1, {
             tunic: { min: 1, max: 3 },
-            sword: { max: 4 },
+            sword: { max: is_swordless ? 0 : 4 },
             shield: { max: 3 },
             bottle: { max: 4 },
             bow: { max: 3 },
@@ -81,6 +84,6 @@
     var standard_items = update(open_items, { sword: { $set: 1 } });
 
     window.item_model = function(mode) {
-        return { items: { standard: standard_items, open: open_items }[mode] };
+        return { items: { standard: is_uncle ? standard_items : open_items, open: open_items }[mode] };
     };
 }(window));
